@@ -24,6 +24,9 @@ $checkout_session = $stripe->checkout->sessions->create([
     // 'giropay',
   ],
   'mode' => 'payment',
+  'tax_id_collection' => [
+    'enabled' => true,
+  ],
   'line_items' => [[
     'price_data' => [
       'currency' => 'eur',
@@ -34,6 +37,11 @@ $checkout_session = $stripe->checkout->sessions->create([
       ],
     ],
     'quantity' => 1,
+    'adjustable_quantity' => [
+      'enabled' => true,
+      'minimum' => 1,
+      'maximum' => 10,
+    ],
   ]],
 ]);
 
