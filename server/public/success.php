@@ -5,6 +5,12 @@ require_once 'shared.php';
 $checkout_session = $stripe->checkout->sessions->retrieve(
 $_GET['session_id']
 );
+
+// $invoice = $stripe->invoices->create([
+//   'customer' => $checkout_session->customer,
+// ]);
+// error_log($invoice);
+// $invoice->finalizeInvoice() $stripe->invoices->retrieve([])
 ?>
 
 <!DOCTYPE html>
@@ -30,31 +36,10 @@ $_GET['session_id']
           <div class="sr-callout">
             <pre><?= json_encode($checkout_session, JSON_PRETTY_PRINT); ?></pre>
           </div>
+          <div class="sr-callout">
+            <pre><?= json_encode($checkout_session->customer, JSON_PRETTY_PRINT); ?></pre>
+          </div>
           <button onclick="window.location.href = '/';">Restart demo</button>
-        </div>
-      </div>
-      <div class="sr-content">
-        <div class="pasha-image-stack">
-          <img
-            src="https://picsum.photos/280/320?random=1"
-            width="140"
-            height="160"
-            />
-          <img
-            src="https://picsum.photos/280/320?random=2"
-            width="140"
-            height="160"
-            />
-          <img
-            src="https://picsum.photos/280/320?random=3"
-            width="140"
-            height="160"
-            />
-          <img
-            src="https://picsum.photos/280/320?random=4"
-            width="140"
-            height="160"
-            />
         </div>
       </div>
     </div>
