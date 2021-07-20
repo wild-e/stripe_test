@@ -18,10 +18,6 @@ $checkout_session = $stripe->checkout->sessions->create([
   'cancel_url' => $domain_url . '/canceled.html',
   'payment_method_types' => [
     'card',
-    // 'alipay',
-    // 'ideal',
-    // 'sepa_debit',
-    // 'giropay',
   ],
   'mode' => 'payment',
   'tax_id_collection' => [
@@ -33,7 +29,7 @@ $checkout_session = $stripe->checkout->sessions->create([
       'unit_amount' => $price,
       'product_data' => [
         'name' => 'Faites un don !',
-        'images' => ["https://tualu.fr/images/logo/logo-tualu-white-portrait.png"],
+        'images' => ["https://tualu.fr/images/bookprofile.png"],
       ],
     ],
     'quantity' => 1,
