@@ -23,6 +23,7 @@ DOMAIN=http://localhost:4242</pre>
   exit;
 }
 
+// load .env variables
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 

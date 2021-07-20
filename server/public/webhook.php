@@ -35,9 +35,13 @@ try {
 // https://stripe.com/docs/api/events/types
 if($event->type == 'checkout.session.completed') {
   error_log('🔔  Checkout Session was completed!');
-  //
+
+} else if($event->type == 'payment_intent.created') { // not working
+  error_log($event->type);
+  
 } else {
   error_log('🔔  Other webhook received! ' . $type);
 }
+
 
 echo json_encode(['status' => 'success']);
