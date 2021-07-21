@@ -10,8 +10,11 @@ $domain_url = $_ENV['DOMAIN'];
 if (isset($_POST['price']) && !empty($_POST['price'])) {
   $price = (float) $_POST['price']*100;
 } else {
-  $price = 1000 ;
+  $price = 10000 ;
 }
+
+// Set max network retries if no response from Stripe servers + generate idempotency key
+\Stripe\Stripe::setMaxNetworkRetries(2);
 
 // Create new Checkout Session for the order
 // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
@@ -22,32 +25,32 @@ if (isset($_POST['price']) && !empty($_POST['price'])) {
     'payment_method_types' => [
       'card',
     ],
-    'customer' => 'cus_JsgLlyYyWoYt6p', // if already existing customer
+    // 'customer' => 'cus_JsgLlyYyWoYt6p', // if already existing customer
     'mode' => 'payment',
-    "billing_address_collection"=> "auto", // will ask for address only if not one provided
+    "billing_address_collection"=> "required", // will ask for address only if not one provided
     'line_items' => [[
       'price_data' => [
         'currency' => 'eur',
-        'unit_amount' => $price,
+        'unit_amount' => $price, // in cents
         'product_data' => [
-          'name' => 'Achetez des points !',
+          'name' => 'Achetez une magnifique bibliothèque pour ranger tout vos livres préférés !',
           'images' => ["https://tualu.fr/images/bookprofile.png"],
         ],
       ],
       'quantity' => 1,
-      'adjustable_quantity' => [
-        'enabled' => true,
-        'minimum' => 1,
-        'maximum' => 10,
-      ],
-      'tax_rates' => [['txr_1JDqbVHDVy7hsJPSOwL3Jj7f']] // send a created tax id
+      // 'adjustable_quantity' => [
+      //   'enabled' => true,
+      //   'minimum' => 1,
+      //   'maximum' => 10,
+      // ],
+      'tax_rates' => [['txr_1JFfDgHDVy7hsJPSoktManRu']] // send an already created tax id
     ]],
     "locale" => 'fr',
   ]);
 // } catch (\Stripe\Exception\ApiErrorException $e) {
 //   error_log($e);
 // }
-error_log($checkout_session);
+// error_log($checkout_session);
 
 header("HTTP/1.1 303 See Other");
 header("Location: " . $checkout_session->url);

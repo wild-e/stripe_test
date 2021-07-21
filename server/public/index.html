@@ -16,16 +16,19 @@
       <div class="sr-main">
         <section class="container">
           <div>
-            <h1>Single photo</h1>
-            <h4>Purchase a Pasha original photo</h4>
+            <h1>Acheter une bibliothèque</h1>
             <div class="pasha-image">
               <img src="https://picsum.photos/280/320?random=4" width="140" height="160" />
             </div>
           </div>
 
           <form action="/create-checkout-session.php" method="POST">
-            <input type="text" name="price" required aria-required="true">
-            <button id="submit">Buy</button>
+            <!-- <input type="text" name="price" required aria-required="true"> -->
+            <button id="submit">Acheter (checkout sessions)</button>
+          </form>
+          <form action="/create-invoice.php" method="POST">
+            <!-- <input type="text" name="price" required aria-required="true"> -->
+            <button id="submit">Acheter (invoicing test)</button>
           </form>
         </section>
       </div>

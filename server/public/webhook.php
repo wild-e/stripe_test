@@ -22,6 +22,7 @@ try {
     $_SERVER['HTTP_STRIPE_SIGNATURE'],
     $_ENV['STRIPE_WEBHOOK_SECRET']
   );
+
 } catch (Exception $e) {
   // If deserialization fails, this error message will be rendered back to Stripe.
   http_response_code(403);
@@ -29,19 +30,21 @@ try {
   exit;
 }
 
+ob_start();
+var_dump($event->type);
+var_dump($event->data->object);
+var_dump($event->data->object->id);
+error_log(ob_get_clean(), 4);
+
 // Switch on the type of the event and automate. View the API reference for a
 // full list of available event types.
 //
 // https://stripe.com/docs/api/events/types
 if($event->type == 'checkout.session.completed') {
   error_log('🔔  Checkout Session was completed!');
-
-} else if($event->type == 'payment_intent.created') { // not working
-  error_log($event->type);
-  
+  //
 } else {
   error_log('🔔  Other webhook received! ' . $type);
 }
-
 
 echo json_encode(['status' => 'success']);
